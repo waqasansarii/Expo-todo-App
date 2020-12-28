@@ -1,12 +1,33 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useReducer } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import Header from './src/components/header'
+import Input from './src/components/input'
+import TodoList from './src/components/todoList'
+import TodoContext from './src/context/context'
+import { InitialState } from './src/context/context'
+import reducer from './src/reudcer/reducer'
+
 
 export default function App() {
+
+  const [state , dispatch] = useReducer(reducer,InitialState)
+
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <TodoContext.Provider  value={
+         { 
+           todo:state,
+           setTodo:dispatch 
+         } 
+       }> 
+
+        <Header />
+        <Input />
+        <TodoList />
+      </TodoContext.Provider>
+      {/* <Text >hello wordl</Text> */}
     </View>
   );
 }
@@ -14,8 +35,9 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+    backgroundColor:'blue',
+//     // color:'#fff'
   },
 });
